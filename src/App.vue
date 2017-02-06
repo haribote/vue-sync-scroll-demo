@@ -5,6 +5,7 @@
       :name="item.name"
       :title="item.title"
       :description="item.description"
+      :isCurrent="index === current"
       :isFirst="index === 0"
       ref="sectionItem"
     ></section-item>
@@ -19,7 +20,7 @@ import offset from 'document-offset';
 import SectionItem from './components/SectionItem';
 
 // キャッシュ
-const REFRESH_RATE = 1000 / 60;
+const REFRESH_RATE = 1000 / 30;
 let scrollHandler;
 let resizeHandler;
 
@@ -67,6 +68,25 @@ export default {
         },
       ],
     };
+  },
+
+  // 算出プロパティ集
+  computed: {
+    /**
+     * スクロール位置がオフセット位置を越えているか否かを示す一覧
+     * @return {Array<boolean>}
+     */
+    isReachedItemsList() {
+      return this.offsetList.map(val => this.scrollY >= val);
+    },
+
+    /**
+     * 現在地を示す
+     * @return {number}
+     */
+    current() {
+      return this.isReachedItemsList.lastIndexOf(true);
+    },
   },
 
   // メソッド集

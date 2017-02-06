@@ -7,7 +7,7 @@
     </div>
 
     <!-- 通常のアイテム -->
-    <div class="caption" v-else>
+    <div class="caption" v-if="!isFirst && isCurrent">
       <h2>{{title}}</h2>
       <p>{{description}}</p>
     </div>
@@ -21,6 +21,7 @@
       'name',
       'title',
       'description',
+      'isCurrent',
       'isFirst',
     ],
     computed: {
