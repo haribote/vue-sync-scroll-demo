@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    <section-item v-for="(item, index) in itemsList" :name="item.name" :title="item.title" :description="item.description" :isFirst="index === 0"></section-item>
+    <section-item
+      v-for="(item, index) in itemsList"
+      :name="item.name"
+      :title="item.title"
+      :description="item.description"
+      :isFirst="index === 0"
+    ></section-item>
   </div>
 </template>
 
