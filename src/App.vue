@@ -18,6 +18,21 @@ export default {
         {
           name: 'raw0027',
         },
+        {
+          name: 'IMG_0515',
+        },
+        {
+          name: 'raw0005',
+        },
+        {
+          name: 'fly-to-istanbul-5_27324746535_o',
+        },
+        {
+          name: 'IMG_1118',
+        },
+        {
+          name: 'IMG_1132',
+        },
       ],
     };
   },
