@@ -7,10 +7,12 @@
     </div>
 
     <!-- 通常のアイテム -->
-    <div class="caption" v-if="!isFirst && isCurrent">
-      <h2>{{title}}</h2>
-      <p>{{description}}</p>
-    </div>
+    <transition name="effect-fade">
+      <div class="caption" v-if="!isFirst && isCurrent">
+        <h2>{{title}}</h2>
+        <p>{{description}}</p>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -41,6 +43,7 @@
 <style scoped>
   .section-item {
     position: relative;
+    overflow: hidden;
     width: 100vw;
     height: 100vh;
     background-position: 50% 50%;
@@ -96,6 +99,26 @@
 
   .caption p {
     font-size: 1.5rem;
+  }
+
+  .effect-fade-enter-active,
+  .effect-fade-leave-active {
+    transition-property: opacity, transform;
+    transition-delay: 200ms;
+    transition-duration: 400ms;
+    transition-timing-function: ease;
+  }
+
+  .effect-fade-enter,
+  .effect-fade-leave-to {
+    opacity: 0;
+    transform: translate3d(0, 33%, 0);
+  }
+
+  .effect-fade-leave,
+  .effect-fade-enter-to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 
   img {

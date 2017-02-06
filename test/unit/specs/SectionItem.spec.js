@@ -30,6 +30,7 @@ describe('SectionItem.vue', () => {
         name: 'foo',
         title: 'bar',
         description: 'buz',
+        isCurrent: true,
         isFirst: false,
       },
     }).$mount();
