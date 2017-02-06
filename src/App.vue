@@ -6,20 +6,34 @@
       :title="item.title"
       :description="item.description"
       :isFirst="index === 0"
+      ref="sectionItem"
     ></section-item>
   </div>
 </template>
 
 <script>
+import throttle from 'lodash.throttle';
+import debounce from 'lodash.debounce';
+import scrolltop from 'scrolltop';
+import offset from 'document-offset';
 import SectionItem from './components/SectionItem';
+
+// キャッシュ
+const REFRESH_RATE = 1000 / 60;
+let scrollHandler;
+let resizeHandler;
 
 export default {
   name: 'app',
   components: {
     SectionItem,
   },
+
+  // データ集合
   data() {
     return {
+      scrollY: 0,
+      offsetList: [],
       itemsList: [
         {
           name: 'raw0027',
@@ -53,6 +67,61 @@ export default {
         },
       ],
     };
+  },
+
+  // メソッド集
+  methods: {
+    /**
+     * @listens window.scroll
+     */
+    handleScroll() {
+      // スクロール位置をキャッシュする
+      this.scrollY = scrolltop();
+    },
+
+    /**
+     * @listens window.resize
+     */
+    handleResize() {
+      // オフセット位置の一覧を書き換える
+      this.offsetList.splice(
+        0,
+        this.offsetList.length,
+        ...this.$refs.sectionItem.map(item => offset(item.$el).top),
+      );
+    },
+  },
+
+  /**
+   * ライフサイクル: マウント直後
+   */
+  mounted() {
+    // キャッシュ
+    const { dispatchEvent, addEventListener, removeEventListener } = global;
+
+    // すでにイベントハンドラーが設定されていたら取り除く
+    if (scrollHandler) {
+      removeEventListener('scroll', scrollHandler);
+    }
+    if (resizeHandler) {
+      removeEventListener('resize', resizeHandler);
+    }
+
+    // 多発するイベントハンドラーの実行頻度を間引く
+    scrollHandler = throttle(() => {
+      this.handleScroll();
+    }, REFRESH_RATE);
+    resizeHandler = debounce(() => {
+      this.handleResize();
+    }, REFRESH_RATE);
+
+    // イベントハンドラーを引き当てる
+    addEventListener('scroll', scrollHandler, false);
+    addEventListener('resize', resizeHandler, false);
+
+    // イベントを発火させる
+    dispatchEvent(new Event('scroll'));
+    dispatchEvent(new Event('resize'));
   },
 };
 </script>
