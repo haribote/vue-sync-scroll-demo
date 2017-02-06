@@ -2,8 +2,9 @@ import Vue from 'vue';
 import SectionItem from 'src/components/SectionItem';
 
 describe('SectionItem.vue', () => {
+  const Ctor = Vue.extend(SectionItem);
+
   it('should render correct contents', () => {
-    const Ctor = Vue.extend(SectionItem);
     const vm = new Ctor({
       propsData: {
         name: 'foo',
@@ -11,5 +12,29 @@ describe('SectionItem.vue', () => {
     }).$mount();
     expect(vm.$el.style.backgroundImage)
       .to.equal(`url(http://localhost:${location.port}/static/img/foo.jpg)`);
+  });
+
+  it('should render cover', () => {
+    const vm = new Ctor({
+      propsData: {
+        name: 'foo',
+        isFirst: true,
+      },
+    }).$mount();
+    expect(vm.$el.querySelectorAll('.cover').length).to.equal(1);
+  });
+
+  it('should render caption', () => {
+    const vm = new Ctor({
+      propsData: {
+        name: 'foo',
+        title: 'bar',
+        description: 'buz',
+        isFirst: false,
+      },
+    }).$mount();
+    expect(vm.$el.querySelectorAll('.caption').length).to.equal(1);
+    expect(vm.$el.querySelector('.caption h2').textContent).to.equal('bar');
+    expect(vm.$el.querySelector('.caption p').textContent).to.equal('buz');
   });
 });
