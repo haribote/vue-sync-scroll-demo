@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <section-item v-for="item in itemsList" :name="item.name"></section-item>
+    <section-item v-for="(item, index) in itemsList" :name="item.name" :isFirst="index === 0"></section-item>
   </div>
 </template>
 
@@ -47,5 +47,8 @@ body {
 
 #app {
   font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings : "palt" 1;
 }
 </style>
