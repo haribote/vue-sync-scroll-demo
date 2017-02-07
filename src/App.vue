@@ -11,6 +11,11 @@
       key="item.name"
       ref="contentSection"
     ></component>
+    <indicator
+      :length="itemsList.length"
+      :current="current"
+      v-on:jump="handleJump"
+    ></indicator>
   </div>
 </template>
 
@@ -21,6 +26,7 @@ import scrolltop from 'scrolltop';
 import offset from 'document-offset';
 import SectionLead from './components/SectionLead';
 import SectionItem from './components/SectionItem';
+import Indicator from './components/Indicator';
 
 // キャッシュ
 const REFRESH_RATE = 1000 / 30;
@@ -32,6 +38,7 @@ export default {
   components: {
     SectionLead,
     SectionItem,
+    Indicator,
   },
 
   // データ集合
@@ -123,6 +130,14 @@ export default {
         this.offsetList.length,
         ...this.$refs.contentSection.map(item => offset(item.$el).top),
       );
+    },
+
+    /**
+     * @listens Indicator.jump
+     * @param to {number}
+     */
+    handleJump(to) {
+      console.log(to);
     },
   },
 

@@ -11,7 +11,7 @@ describe('SectionItem.vue', () => {
       },
     }).$mount();
     expect(vm.$el.style.backgroundImage)
-      .to.equal(`url(http://localhost:${location.port}/static/img/foo.jpg)`);
+      .to.equal(`url(http://localhost:${location.port}/static/img/foo_s.jpg)`);
   });
 
   it('should render caption', () => {
