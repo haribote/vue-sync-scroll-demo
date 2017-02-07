@@ -24,6 +24,8 @@ import throttle from 'lodash.throttle';
 import debounce from 'lodash.debounce';
 import scrolltop from 'scrolltop';
 import offset from 'document-offset';
+import TWEEN from 'tween.js';
+import raf from 'raf';
 import SectionLead from './components/SectionLead';
 import SectionItem from './components/SectionItem';
 import Indicator from './components/Indicator';
@@ -78,6 +80,7 @@ export default {
           description: 'Greece',
         },
       ],
+      inTween: false,
     };
   },
 
@@ -113,15 +116,20 @@ export default {
   // メソッド集
   methods: {
     /**
-     * @listens window.scroll
+     * @listens window:scroll
      */
     handleScroll() {
+      // スムーススクロール中ならば何もしない
+      if (this.inTween) {
+        return;
+      }
+
       // スクロール位置をキャッシュする
       this.scrollY = scrolltop();
     },
 
     /**
-     * @listens window.resize
+     * @listens window:resize
      */
     handleResize() {
       // オフセット位置の一覧を書き換える
@@ -133,11 +141,60 @@ export default {
     },
 
     /**
-     * @listens Indicator.jump
-     * @param to {number}
+     * @listens Indicator:jump
+     * @param index {number}
      */
-    handleJump(to) {
-      console.log(to);
+    handleJump(index) {
+      // スムーススクロール中ならば何もしない
+      if (this.inTween) {
+        return;
+      }
+
+      // キャッシュ
+      let isCompleted = false;
+
+      this.inTween = true;
+
+      // スムーススクロールのモーションを設定する
+      const tween = new TWEEN.Tween({
+        y: scrolltop(),
+      })
+        .to({
+          y: this.offsetList[index],
+        }, 800)
+        .easing(TWEEN.Easing.Cubic.Out)
+        .onUpdate(function onTweenUpdate() {
+          global.scrollTo(0, this.y);
+        })
+        .onComplete(() => {
+          tween.stop();
+          isCompleted = true;
+          this.inTween = false;
+          this.$nextTick(() => {
+            this.dispatchGlobalEvent('scroll');
+          });
+        })
+        .start();
+
+      // アニメーションを動かす関数を定義する
+      const animate = (time) => {
+        if (isCompleted) {
+          return;
+        }
+        raf(animate);
+        TWEEN.update(time);
+      };
+
+      // アニメーションを開始する
+      raf(animate);
+    },
+
+    /**
+     * グローバルイベントを発火させる
+     * @param name {string}
+     */
+    dispatchGlobalEvent(name) {
+      global.dispatchEvent(new Event(name));
     },
   },
 
@@ -146,7 +203,7 @@ export default {
    */
   mounted() {
     // キャッシュ
-    const { dispatchEvent, addEventListener, removeEventListener } = global;
+    const { addEventListener, removeEventListener } = global;
 
     // すでにイベントハンドラーが設定されていたら取り除く
     if (scrollHandler) {
@@ -169,8 +226,8 @@ export default {
     addEventListener('resize', resizeHandler, false);
 
     // イベントを発火させる
-    dispatchEvent(new Event('scroll'));
-    dispatchEvent(new Event('resize'));
+    this.dispatchGlobalEvent('scroll');
+    this.dispatchGlobalEvent('resize');
   },
 };
 </script>
