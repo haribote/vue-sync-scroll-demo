@@ -14,16 +14,6 @@ describe('SectionItem.vue', () => {
       .to.equal(`url(http://localhost:${location.port}/static/img/foo.jpg)`);
   });
 
-  it('should render cover', () => {
-    const vm = new Ctor({
-      propsData: {
-        name: 'foo',
-        isFirst: true,
-      },
-    }).$mount();
-    expect(vm.$el.querySelectorAll('.cover').length).to.equal(1);
-  });
-
   it('should render caption', () => {
     const vm = new Ctor({
       propsData: {

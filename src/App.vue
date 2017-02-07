@@ -1,14 +1,15 @@
 <template>
   <div id="app">
-    <section-item
+    <component
       v-for="(item, index) in itemsList"
       :name="item.name"
       :title="item.title"
       :description="item.description"
       :isCurrent="index === current"
-      :isFirst="index === 0"
-      ref="sectionItem"
-    ></section-item>
+      :is="index === 0 ? 'section-lead' : 'section-item'"
+      key="item.name"
+      ref="contentSection"
+    ></component>
   </div>
 </template>
 
@@ -17,6 +18,7 @@ import throttle from 'lodash.throttle';
 import debounce from 'lodash.debounce';
 import scrolltop from 'scrolltop';
 import offset from 'document-offset';
+import SectionLead from './components/SectionLead';
 import SectionItem from './components/SectionItem';
 
 // キャッシュ
@@ -27,6 +29,7 @@ let resizeHandler;
 export default {
   name: 'app',
   components: {
+    SectionLead,
     SectionItem,
   },
 
@@ -107,7 +110,7 @@ export default {
       this.offsetList.splice(
         0,
         this.offsetList.length,
-        ...this.$refs.sectionItem.map(item => offset(item.$el).top),
+        ...this.$refs.contentSection.map(item => offset(item.$el).top),
       );
     },
   },

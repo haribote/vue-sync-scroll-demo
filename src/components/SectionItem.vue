@@ -1,14 +1,7 @@
 <template>
-  <div class="section-item" :style="style">
-    <!-- 表紙となるアイテム -->
-    <div class="cover" v-if="isFirst">
-      <h1>World Heritage</h1>
-      <p>Explore the world.</p>
-    </div>
-
-    <!-- 通常のアイテム -->
+  <div class="section" :style="style">
     <transition name="effect-fade">
-      <div class="caption" v-if="!isFirst && isCurrent">
+      <div class="caption" v-if="isCurrent">
         <h2>{{title}}</h2>
         <p>{{description}}</p>
       </div>
@@ -17,64 +10,16 @@
 </template>
 
 <script>
+  import ContentSection from './ContentSection';
+
   export default {
     name: 'section-item',
-    props: [
-      'name',
-      'title',
-      'description',
-      'isCurrent',
-      'isFirst',
-    ],
-    computed: {
-      backgroundImageUrl() {
-        return `/static/img/${this.name}.jpg`;
-      },
-      style() {
-        return {
-          backgroundImage: `url(${this.backgroundImageUrl})`,
-        };
-      },
-    },
+    extends: ContentSection,
   };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .section-item {
-    position: relative;
-    overflow: hidden;
-    width: 100vw;
-    height: 100vh;
-    background-position: 50% 50%;
-    background-size: cover;
-    color: #fff;
-  }
-
-  .cover {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 50px;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .4) 10%, rgba(0, 0, 0, 1));
-    text-align: center;
-  }
-
-  .cover h1,
-  .cover p {
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .cover h1 {
-    font-size: 8rem;
-  }
-
-  .cover p {
-    font-size: 3rem;
-  }
-
   .caption {
     position: absolute;
     bottom: 0;
@@ -99,30 +44,5 @@
 
   .caption p {
     font-size: 1.5rem;
-  }
-
-  .effect-fade-enter-active,
-  .effect-fade-leave-active {
-    transition-property: opacity, transform;
-    transition-delay: 200ms;
-    transition-duration: 400ms;
-    transition-timing-function: ease;
-  }
-
-  .effect-fade-enter,
-  .effect-fade-leave-to {
-    opacity: 0;
-    transform: translate3d(0, 33%, 0);
-  }
-
-  .effect-fade-leave,
-  .effect-fade-enter-to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-
-  img {
-    width: 100%;
-    height: auto;
   }
 </style>
