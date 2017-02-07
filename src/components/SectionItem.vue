@@ -1,6 +1,9 @@
 <template>
-  <div class="section" :style="style">
-    <transition name="effect-fade">
+  <div class="section" :style="tempImageStyle">
+    <transition name="effect-overlay">
+      <div class="overlay" :style="regularImageStyle" v-if="isLoaded"></div>
+    </transition>
+    <transition name="effect-caption">
       <div class="caption" v-if="isCurrent">
         <h2>{{title}}</h2>
         <p>{{description}}</p>

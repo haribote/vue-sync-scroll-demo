@@ -1,5 +1,8 @@
 <template>
-  <div class="section" :style="style">
+  <div class="section" :style="tempImageStyle">
+    <transition name="effect-overlay">
+      <div class="overlay" :style="regularImageStyle" v-if="isLoaded"></div>
+    </transition>
     <div class="cover">
       <h1>World Heritage</h1>
       <p>Explore the world.</p>

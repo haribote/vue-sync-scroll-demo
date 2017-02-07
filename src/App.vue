@@ -5,6 +5,7 @@
       :name="item.name"
       :title="item.title"
       :description="item.description"
+      :isApproached="isApproachedItemsList[index]"
       :isCurrent="index === current"
       :is="index === 0 ? 'section-lead' : 'section-item'"
       key="item.name"
@@ -75,6 +76,16 @@ export default {
 
   // 算出プロパティ集
   computed: {
+    /**
+     * 要素が画面下端より上にいるか否かを示す一覧
+     * @return {Array<boolean>}
+     */
+    isApproachedItemsList() {
+      const { innerHeight } = global;
+
+      return this.offsetList.map(val => this.scrollY + innerHeight > val);
+    },
+
     /**
      * スクロール位置がオフセット位置を越えているか否かを示す一覧
      * @return {Array<boolean>}

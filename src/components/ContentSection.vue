@@ -4,22 +4,87 @@
 </template>
 
 <script>
+  // キャッシュ
+  const IMAGE_PATH = '/static/img/';
+  const TEMP_IMAGE_SUFFIX = '_s';
+  const IMAGE_EXT = '.jpg';
+
   export default {
     name: 'content-section',
+
+    // プロパティ一覧
     props: [
       'name',
       'title',
       'description',
+      'isApproached',
       'isCurrent',
     ],
+
+    // 内部プロパティ一覧
+    data() {
+      return {
+        inLoading: false,
+        isLoaded: false,
+      };
+    },
+
+    // 算出プロパティ一覧
     computed: {
-      backgroundImageUrl() {
-        return `/static/img/${this.name}.jpg`;
+      tempImageUrl() {
+        return `${IMAGE_PATH}${this.name}${TEMP_IMAGE_SUFFIX}${IMAGE_EXT}`;
       },
-      style() {
+      regularImageUrl() {
+        return `${IMAGE_PATH}${this.name}${IMAGE_EXT}`;
+      },
+      tempImageStyle() {
         return {
-          backgroundImage: `url(${this.backgroundImageUrl})`,
+          backgroundImage: `url(${this.tempImageUrl})`,
         };
+      },
+      regularImageStyle() {
+        return {
+          backgroundImage: `url(${this.regularImageUrl})`,
+        };
+      },
+    },
+
+    // ウォッチャー一覧
+    watch: {
+      isApproached(val) {
+        if (val) {
+          this.loadRegularImage();
+        }
+      },
+    },
+
+    // メソッド一覧
+    methods: {
+      loadRegularImage() {
+        if (this.inLoading || this.isLoaded) {
+          return;
+        }
+
+        this.inLoading = true;
+
+        const load = () => (
+          new Promise((resolve) => {
+            const image = new Image();
+
+            image.onload = () => {
+              Object.assign(this, {
+                inLoading: false,
+                isLoaded: true,
+              });
+              resolve(image);
+            };
+
+            image.crossOrigin = 'Anonymous';
+            image.src = this.regularImageUrl;
+          })
+        );
+
+        load();
       },
     },
   };
@@ -32,6 +97,7 @@
     overflow: hidden;
     width: 100vw;
     height: 100vh;
+    background-color: #000;
     background-position: 50% 50%;
     background-size: cover;
     color: #fff;
@@ -47,48 +113,50 @@
     margin-top: 100vh;
   }
 
-  .caption {
+  .section .overlay {
     position: absolute;
+    top: 0;
     bottom: 0;
     left: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 30px;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .4) 15%, rgba(0, 0, 0, 1));
+    right: 0;
+    background-position: 50% 50%;
+    background-size: cover;
   }
 
-  .caption h2,
-  .caption p {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  .effect-overlay-enter-active,
+  .effect-overlay-leave-active {
+    transition-property: opacity;
+    transition-delay: 400ms;
+    transition-duration: 600ms;
+    transition-timing-function: ease;
   }
 
-  .caption h2 {
-    font-size: 2rem;
+  .effect-overlay-enter,
+  .effect-overlay-leave-to {
+    opacity: 0;
   }
 
-  .caption p {
-    font-size: 1.5rem;
+  .effect-overlay-leave,
+  .effect-overlay-enter-to {
+    opacity: 1;
   }
 
-  .effect-fade-enter-active,
-  .effect-fade-leave-active {
+  .effect-caption-enter-active,
+  .effect-caption-leave-active {
     transition-property: opacity, transform;
     transition-delay: 100ms;
     transition-duration: 400ms;
     transition-timing-function: ease;
   }
 
-  .effect-fade-enter,
-  .effect-fade-leave-to {
+  .effect-caption-enter,
+  .effect-caption-leave-to {
     opacity: 0;
     transform: translate3d(0, 33%, 0);
   }
 
-  .effect-fade-leave,
-  .effect-fade-enter-to {
+  .effect-caption-leave,
+  .effect-caption-enter-to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }

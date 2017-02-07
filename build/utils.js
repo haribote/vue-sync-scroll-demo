@@ -30,10 +30,10 @@ exports.cssLoaders = function (options) {
     if (options.extract) {
       return ExtractTextPlugin.extract({
         loader: sourceLoader,
-        fallbackLoader: 'vue-style-loader'
+        fallbackLoader: 'vue-regularImagestyle-loader'
       })
     } else {
-      return ['vue-style-loader', sourceLoader].join('!')
+      return ['vue-regularImagestyle-loader', sourceLoader].join('!')
     }
   }
 
@@ -49,7 +49,7 @@ exports.cssLoaders = function (options) {
   }
 }
 
-// Generate loaders for standalone style files (outside of .vue)
+// Generate loaders for standalone regularImagestyle files (outside of .vue)
 exports.styleLoaders = function (options) {
   var output = []
   var loaders = exports.cssLoaders(options)
