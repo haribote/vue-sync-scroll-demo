@@ -266,31 +266,38 @@ body {
   margin-top: 100vh;
 }
 
-.section .overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.section .figure {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
   background-position: 50% 50%;
   background-size: cover;
 }
 
-.effect-overlay-enter-active,
-.effect-overlay-leave-active {
+.section .figure img {
+  display: none;
+  width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+
+.effect-figure-enter-active,
+.effect-figure-leave-active {
   transition-property: opacity;
   transition-delay: 400ms;
   transition-duration: 600ms;
   transition-timing-function: ease;
 }
 
-.effect-overlay-enter,
-.effect-overlay-leave-to {
+.effect-figure-enter,
+.effect-figure-leave-to {
   opacity: 0;
 }
 
-.effect-overlay-leave,
-.effect-overlay-enter-to {
+.effect-figure-leave,
+.effect-figure-enter-to {
   opacity: 1;
 }
 
@@ -312,10 +319,5 @@ body {
 .effect-caption-enter-to {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-}
-
-.section img {
-  width: 100%;
-  height: auto;
 }
 </style>

@@ -1,7 +1,9 @@
 <template>
   <div class="section" :style="tempImageStyle">
-    <transition name="effect-overlay">
-      <div class="overlay" :style="regularImageStyle" v-if="isLoaded"></div>
+    <transition name="effect-figure">
+      <div class="figure" :style="regularImageStyle" v-if="isLoaded">
+        <img :src="regularImageUrl" :alt="title">
+      </div>
     </transition>
     <slot></slot>
   </div>
@@ -19,6 +21,7 @@
     // プロパティ一覧
     props: [
       'name',
+      'title',
       'isApproached',
     ],
 

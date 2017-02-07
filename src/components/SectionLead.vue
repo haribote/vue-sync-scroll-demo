@@ -1,6 +1,7 @@
 <template>
   <content-section
     :name="name"
+    :title="title"
     :isApproached="isApproached"
   >
     <div class="cover">
