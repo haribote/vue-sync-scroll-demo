@@ -2,6 +2,9 @@
 
 > A Vue.js project
 
+## Demo
+https://haribote.github.io/vue-sync-scroll-demo/
+
 ## Build Setup
 
 ``` bash
