@@ -1,15 +1,16 @@
 <template>
-  <div class="section" :style="tempImageStyle">
-    <transition name="effect-overlay">
-      <div class="overlay" :style="regularImageStyle" v-if="isLoaded"></div>
-    </transition>
+  <content-section
+    :name="name"
+    :isApproached="isApproached"
+  >
     <transition name="effect-caption">
       <div class="caption" v-if="isCurrent">
         <h2>{{title}}</h2>
         <p>{{description}}</p>
       </div>
     </transition>
-  </div>
+  </content-section>
+
 </template>
 
 <script>
@@ -17,7 +18,19 @@
 
   export default {
     name: 'section-item',
-    extends: ContentSection,
+
+    // プロパティ一覧
+    props: [
+      'name',
+      'title',
+      'description',
+      'isApproached',
+      'isCurrent',
+    ],
+
+    components: {
+      ContentSection,
+    },
   };
 </script>
 

@@ -170,6 +170,80 @@ body {
   font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings : "palt" 1;
+  font-feature-settings: "palt" 1;
+}
+
+.section {
+  position: relative;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  background-position: 50% 50%;
+  background-size: cover;
+  color: #fff;
+}
+
+.section:first-of-type {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.section:first-of-type + .section {
+  margin-top: 100vh;
+}
+
+.section .overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.effect-overlay-enter-active,
+.effect-overlay-leave-active {
+  transition-property: opacity;
+  transition-delay: 400ms;
+  transition-duration: 600ms;
+  transition-timing-function: ease;
+}
+
+.effect-overlay-enter,
+.effect-overlay-leave-to {
+  opacity: 0;
+}
+
+.effect-overlay-leave,
+.effect-overlay-enter-to {
+  opacity: 1;
+}
+
+.effect-caption-enter-active,
+.effect-caption-leave-active {
+  transition-property: opacity, transform;
+  transition-delay: 100ms;
+  transition-duration: 400ms;
+  transition-timing-function: ease;
+}
+
+.effect-caption-enter,
+.effect-caption-leave-to {
+  opacity: 0;
+  transform: translate3d(0, 33%, 0);
+}
+
+.effect-caption-leave,
+.effect-caption-enter-to {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.section img {
+  width: 100%;
+  height: auto;
 }
 </style>

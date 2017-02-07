@@ -1,13 +1,13 @@
 <template>
-  <div class="section" :style="tempImageStyle">
-    <transition name="effect-overlay">
-      <div class="overlay" :style="regularImageStyle" v-if="isLoaded"></div>
-    </transition>
+  <content-section
+    :name="name"
+    :isApproached="isApproached"
+  >
     <div class="cover">
       <h1>World Heritage</h1>
       <p>Explore the world.</p>
     </div>
-  </div>
+  </content-section>
 </template>
 
 <script>
@@ -15,7 +15,19 @@
 
   export default {
     name: 'section-lead',
-    extends: ContentSection,
+
+    // プロパティ一覧
+    props: [
+      'name',
+      'title',
+      'description',
+      'isApproached',
+      'isCurrent',
+    ],
+
+    components: {
+      ContentSection,
+    },
   };
 </script>
 
