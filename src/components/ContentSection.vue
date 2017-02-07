@@ -11,7 +11,7 @@
 
 <script>
   // キャッシュ
-  const IMAGE_PATH = '/static/img/';
+  const IMAGE_PATH = './static/img/';
   const TEMP_IMAGE_SUFFIX = '_s';
   const IMAGE_EXT = '.jpg';
 
