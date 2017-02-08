@@ -3,11 +3,23 @@ body {
   margin: 0;
   padding: 0;
 }
+img {
+  vertical-align: top;
+}
 #app {
   font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "palt" 1;
+}
+.aside {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}
+.aside a {
+  display: block;
 }
 .section {
   position: relative;
@@ -43,7 +55,23 @@ body {
   display: none;
   width: 100%;
   height: auto;
-  vertical-align: top;
+}
+.footer {
+  position: relative;
+  padding: 10px;
+  background: #000;
+  color: #fff;
+  text-align: center;
+}
+.footer p {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: .8rem;
+  line-height: 15px;
+}
+.footer p a,
+.footer p img {
+  display: inline-block;
 }
 .effect-figure-enter-active,
 .effect-figure-leave-active {
@@ -261,4 +289,4 @@ svg[data-v-603072fa] {
   vertical-align: top;
 }
 
-/*# sourceMappingURL=app.4c7349ba3966b5ffb3dcdd56dd558d52.css.map*/
+/*# sourceMappingURL=app.f728b712c874e5f4002768ffd3ec3dbd.css.map*/
