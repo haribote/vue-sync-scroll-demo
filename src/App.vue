@@ -5,7 +5,7 @@
       :name="item.name"
       :title="item.title"
       :description="item.description"
-      :isApproached="isApproachedItemsList[index]"
+      :isApproached="isApproachedList[index]"
       :isCurrent="index === current"
       :is="index === 0 ? 'section-lead' : 'section-item'"
       key="item.name"
@@ -80,7 +80,7 @@ export default {
           description: 'Greece',
         },
       ],
-      inTween: false,
+      inAutoScrolling: false,
     };
   },
 
@@ -90,7 +90,7 @@ export default {
      * 要素が画面下端より上にいるか否かを示す一覧
      * @return {Array<boolean>}
      */
-    isApproachedItemsList() {
+    isApproachedList() {
       const { innerHeight } = global;
 
       return this.offsetList.map(val => this.scrollY + innerHeight > val);
@@ -100,7 +100,7 @@ export default {
      * スクロール位置がオフセット位置を越えているか否かを示す一覧
      * @return {Array<boolean>}
      */
-    isReachedItemsList() {
+    isReachedList() {
       return this.offsetList.map(val => this.scrollY >= val);
     },
 
@@ -109,7 +109,7 @@ export default {
      * @return {number}
      */
     current() {
-      return this.isReachedItemsList.lastIndexOf(true);
+      return this.isReachedList.lastIndexOf(true);
     },
   },
 
@@ -120,7 +120,7 @@ export default {
      */
     handleScroll() {
       // スムーススクロール中ならば何もしない
-      if (this.inTween) {
+      if (this.inAutoScrolling) {
         return;
       }
 
@@ -146,14 +146,14 @@ export default {
      */
     handleJump(index) {
       // スムーススクロール中ならば何もしない
-      if (this.inTween) {
+      if (this.inAutoScrolling) {
         return;
       }
 
       // キャッシュ
       let isCompleted = false;
 
-      this.inTween = true;
+      this.inAutoScrolling = true;
 
       // スムーススクロールのモーションを設定する
       const tween = new TWEEN.Tween({
@@ -169,7 +169,7 @@ export default {
         .onComplete(() => {
           tween.stop();
           isCompleted = true;
-          this.inTween = false;
+          this.inAutoScrolling = false;
           this.$nextTick(() => {
             this.dispatchGlobalEvent('scroll');
           });
