@@ -16,6 +16,9 @@
       :current="current"
       v-on:jump="handleJump"
     ></indicator>
+    <footer class="footer">
+      <p>Photo credits: © KIMURA Tetsuro <a rel="license" href="http://creativecommons.org/licenses/by-nc/2.0/" target="_blank"><img src="https://i.creativecommons.org/l/by-nc/2.0/80x15.png" alt="クリエイティブ・コモンズ・ライセンス" width="80" height="15" /></a></p>
+    </footer>
   </div>
 </template>
 
@@ -136,7 +139,11 @@ export default {
       this.offsetList.splice(
         0,
         this.offsetList.length,
-        ...this.$refs.contentSection.map(item => offset(item.$el).top),
+        ...this.$refs.contentSection.map((item, index) => (
+          index === 0 ?
+            0 :
+            offset(item.$el).top
+        )),
       );
     },
 
@@ -280,6 +287,27 @@ body {
   display: none;
   width: 100%;
   height: auto;
+  vertical-align: top;
+}
+
+.footer {
+  position: relative;
+  padding: 10px;
+  background: #000;
+  color: #fff;
+  text-align: right;
+}
+
+.footer p {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: .8rem;
+  line-height: 15px;
+}
+
+.footer p a,
+.footer p img {
+  display: inline-block;
   vertical-align: top;
 }
 
