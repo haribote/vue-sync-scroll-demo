@@ -1,5 +1,16 @@
 <template>
   <div id="app">
+    <aside class="aside">
+      <a href="https://github.com/haribote/vue-sync-scroll-demo" target="_blank">
+        <img
+          src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+          alt="Fork me on GitHub"
+          width="74.5"
+          height="74.5"
+          data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
+        >
+      </a>
+    </aside>
     <component
       v-for="(item, index) in itemsList"
       :name="item.name"
@@ -245,11 +256,26 @@ body {
   padding: 0;
 }
 
+img {
+  vertical-align: top;
+}
+
 #app {
   font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "palt" 1;
+}
+
+.aside {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.aside a {
+  display: block;
 }
 
 .section {
@@ -287,7 +313,6 @@ body {
   display: none;
   width: 100%;
   height: auto;
-  vertical-align: top;
 }
 
 .footer {
@@ -295,7 +320,7 @@ body {
   padding: 10px;
   background: #000;
   color: #fff;
-  text-align: right;
+  text-align: center;
 }
 
 .footer p {
@@ -308,7 +333,6 @@ body {
 .footer p a,
 .footer p img {
   display: inline-block;
-  vertical-align: top;
 }
 
 .effect-figure-enter-active,
