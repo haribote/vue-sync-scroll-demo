@@ -5,7 +5,7 @@
     :isApproached="isApproached"
   >
     <transition name="effect-caption">
-      <div class="caption" v-if="isCurrent">
+      <div class="caption" v-show="isCurrent">
         <h2>{{title}}</h2>
         <p>{{description}}</p>
       </div>
